@@ -5,7 +5,7 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 import time
 
 
-def main(s_date, connection):
+def main(connection):
     # вводим дата начала
     start_date = input('Введите дату в формате yyyy-mm-dd: ')
     # крайняя дата(правый предел)
@@ -122,6 +122,7 @@ def main(s_date, connection):
     ORDER BY `Дата Обр.`, `Время Обр.`
     ;""")
         # извлекаем данные
+        print(f'Извлекаем данные и сохраняем файл за {start_date}')
         result = cursor.fetchall()
         workbook = Workbook()
         sheet = workbook.active
@@ -130,7 +131,7 @@ def main(s_date, connection):
         # сохраняем файл
         workbook.save(f"{start_date}.xlsx")
         print(f"Результаты запроса сохранены в файл: {start_date}.xlsx")
-        start_date = s_date + timedelta(days=1)
+        start_date = start_date + timedelta(days=1)
         print(f"Слудующая дата {start_date}")
         time.sleep(2)
     cursor.close()
